@@ -2,16 +2,47 @@
 
 ## Installation
 
-### One-Line Install
+### With Cursor AI (Recommended)
 
-**Linux/Mac:**
-```bash
-curl -s https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/install.sh | bash
+Copy and paste this to Cursor AI:
+
+```
+Please install Laravel Cursor Rules in this project by following these steps:
+
+1. Read the installation instructions from:
+   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/INSTALL.md
+
+2. Download the Laravel command file to app/Console/Commands/CursorRulesUpdate.php from:
+   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/CursorRulesUpdate.php
+
+3. Run the command to download all rules:
+   php artisan cursor:rules-update
+
+4. Download the pre-commit hook to .git/hooks/pre-commit from:
+   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
+
+5. Make the hook executable (Linux/Mac):
+   chmod +x .git/hooks/pre-commit
+
+6. Verify the installation by listing the .cursor/rules/ directory.
+
+7. Show me a summary of what was installed.
 ```
 
-**Windows (PowerShell):**
-```powershell
-irm https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/install.ps1 | iex
+### Manual Installation
+
+```bash
+# 1. Download command
+curl -o app/Console/Commands/CursorRulesUpdate.php \
+  https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/CursorRulesUpdate.php
+
+# 2. Download rules
+php artisan cursor:rules-update
+
+# 3. Install pre-commit hook (optional)
+curl -o .git/hooks/pre-commit \
+  https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
+chmod +x .git/hooks/pre-commit
 ```
 
 ## What Gets Installed
