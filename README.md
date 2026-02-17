@@ -77,7 +77,8 @@ php artisan cursor:rules-update
 - Runs before every git commit
 - Checks for rule updates
 - Downloads new rules if available
-- Stages updated rules automatically
+- Blocks commit if rules were updated (requires manual review)
+- You review and stage changes yourself
 
 **Force Update:**
 ```bash

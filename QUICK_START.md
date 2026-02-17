@@ -34,7 +34,7 @@ php artisan cursor:rules-update --force
 ```
 
 ### Automatic Updates
-Rules automatically update before each git commit (via pre-commit hook).
+Pre-commit hook checks for updates before each commit. If rules are updated, the commit will be blocked so you can review changes first.
 
 ## File Structure
 
@@ -66,8 +66,13 @@ your-laravel-project/
 2. **Command checks** remote manifest for version
 3. **Compares** local version vs remote version
 4. **Downloads** updated rules if version differs
-5. **Stages** updated rules automatically
-6. **Commit proceeds** with latest rules
+5. **Blocks commit** if rules were updated
+6. **You review** the changes in `.cursor/rules/`
+7. **Stage and commit** after reviewing:
+   ```bash
+   git add .cursor/rules/
+   git commit
+   ```
 
 ## Troubleshooting
 
@@ -87,6 +92,24 @@ chmod +x .git/hooks/pre-commit
 curl -o .git/hooks/pre-commit \
   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
 chmod +x .git/hooks/pre-commit
+```
+
+### Commit blocked after rules update
+This is expected behavior! Review the changes:
+```bash
+# See what changed
+git diff .cursor/rules/
+
+# If changes look good, stage them
+git add .cursor/rules/
+
+# Then commit
+git commit
+```
+
+### Skip the pre-commit check
+```bash
+git commit --no-verify
 ```
 
 ### Force reinstall everything
