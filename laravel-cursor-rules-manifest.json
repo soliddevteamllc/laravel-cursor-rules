@@ -1,0 +1,15 @@
+{
+    "version": "v0.0.1",
+    "files": [
+        "build-after-changes.mdc",
+        "color-palette-usage.mdc",
+        "english-naming-conventions.mdc",
+        "icons-usage.mdc",
+        "laravel-livewire-best-practices.mdc",
+        "livewire-component-structure.mdc",
+        "prefer-livewire-components.mdc",
+        "responsive-design.mdc"
+    ],
+    "description": "Laravel Cursor Rules - Auto-syncing AI rules for Laravel + Livewire projects",
+    "repository": "https://github.com/soliddevteamllc/laravel-cursor-rules"
+}

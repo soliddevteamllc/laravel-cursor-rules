@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Laravel Cursor Rules Pre-Commit Hook
+# This hook automatically checks for and updates Cursor AI rules before each commit
+
+echo "🔍 Checking Cursor rules..."
+
+# Run the Laravel command to check for updates
+php artisan cursor:rules-update
+
+# Check if the command succeeded
+if [ $? -ne 0 ]; then
+    echo "⚠️  Warning: Failed to check for Cursor rules updates"
+    echo "Proceeding with commit anyway..."
+fi
+
+# If rules were updated, stage the changes
+if [ -n "$(git status --porcelain .cursor/rules/)" ]; then
+    echo "📝 Staging updated Cursor rules..."
+    git add .cursor/rules/
+fi
+
+exit 0

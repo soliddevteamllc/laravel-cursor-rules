@@ -22,50 +22,69 @@ laravel-cursor-rules/
 
 ## 🚀 Quick Start
 
-### Option 1: Manual Installation
+### Automated Installation (Recommended)
 
-1. Copy the `.cursor` folder to your Laravel project root
-2. Copy `laravel-cursor-rules-version.md` to your project root
-3. The rules will auto-update at the start of each new Cursor conversation
-
-### Option 2: Git Submodule (Recommended)
-
+**Linux/Mac:**
 ```bash
-# Add as submodule
-git submodule add https://github.com/soliddevteamllc/laravel-cursor-rules.git
-
-# Copy files to your project
-cp -r laravel-cursor-rules/.cursor .
-cp laravel-cursor-rules/laravel-cursor-rules-version.md .
-
-# Update submodule when needed
-git submodule update --remote laravel-cursor-rules
+curl -s https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/install.sh | bash
 ```
+
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/install.ps1 | iex
+```
+
+### Manual Installation
+
+1. Download the command file:
+   ```bash
+   curl -o app/Console/Commands/CursorRulesUpdate.php \
+     https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/CursorRulesUpdate.php
+   ```
+
+2. Run the update command:
+   ```bash
+   php artisan cursor:rules-update
+   ```
+
+3. (Optional) Install pre-commit hook for auto-updates:
+   ```bash
+   curl -o .git/hooks/pre-commit \
+     https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
+   chmod +x .git/hooks/pre-commit
+   ```
 
 ## 🔄 Auto-Update Feature
 
-The install rule (`laravel-cursor-rules-install.mdc`) automatically:
+The Laravel command (`cursor:rules-update`) automatically:
 
-1. **Checks for updates** at the start of every new conversation
+1. **Checks for updates** using a manifest file
 2. **Compares versions** between your local rules and the GitHub repository
 3. **Downloads updates** if a new version is available
-4. **Updates itself** to ensure the latest installation logic
+4. **Runs automatically** via pre-commit hook (optional)
 
 ### How It Works
 
+**Manual Update:**
 ```bash
-# At conversation start, the AI agent:
-1. Fetches remote version from GitHub
-2. Compares with local version
-3. If different: Downloads all rule files + install rule
-4. If same: Proceeds silently
+php artisan cursor:rules-update
+```
+
+**Automatic Updates (via pre-commit hook):**
+- Runs before every git commit
+- Checks for rule updates
+- Downloads new rules if available
+- Stages updated rules automatically
+
+**Force Update:**
+```bash
+php artisan cursor:rules-update --force
 ```
 
 ## 📋 Available Rules
 
 | Rule | Description |
 |------|-------------|
-| **laravel-cursor-rules-install.mdc** | Auto-sync installer (runs automatically) |
 | **build-after-changes.mdc** | Run `npm run build` after CSS/HTML changes |
 | **color-palette-usage.mdc** | Project color palette standards |
 | **english-naming-conventions.mdc** | English naming for all code |
@@ -74,6 +93,32 @@ The install rule (`laravel-cursor-rules-install.mdc`) automatically:
 | **livewire-component-structure.mdc** | Component organization patterns |
 | **prefer-livewire-components.mdc** | When to use Livewire components |
 | **responsive-design.mdc** | Responsive design principles |
+
+## 🛠️ Laravel Command
+
+The `cursor:rules-update` command is installed in your project at:
+```
+app/Console/Commands/CursorRulesUpdate.php
+```
+
+### Command Features:
+
+- ✅ Fetches manifest from GitHub
+- ✅ Compares local vs remote version
+- ✅ Downloads only changed files
+- ✅ Progress bar for downloads
+- ✅ Error handling and reporting
+- ✅ Force update option
+
+### Command Options:
+
+```bash
+# Check and update if needed
+php artisan cursor:rules-update
+
+# Force update regardless of version
+php artisan cursor:rules-update --force
+```
 
 ## 🔧 Customization
 
@@ -92,14 +137,31 @@ The install rule (`laravel-cursor-rules-install.mdc`) automatically:
 
 ### Disabling Auto-Update
 
-To disable auto-updates, remove or rename `laravel-cursor-rules-install.mdc`.
+To disable pre-commit auto-updates, remove the git hook:
+```bash
+rm .git/hooks/pre-commit
+```
+
+You can still manually update anytime with:
+```bash
+php artisan cursor:rules-update
+```
 
 ## 📦 Version Management
 
-- Current version is tracked in `laravel-cursor-rules-version.md`
+- Current version is tracked in `laravel-cursor-rules-manifest.json`
 - Version format: `v0.0.1`
+- Manifest contains list of all rule files
 - Increment version when publishing rule updates
-- Projects automatically sync when version changes
+- Projects check manifest to determine if updates are needed
+
+### Updating Rules
+
+1. Make changes to rule files in `.cursor/rules/`
+2. Update version in `laravel-cursor-rules-manifest.json`
+3. Update version in `laravel-cursor-rules-version.md`
+4. Commit and push changes
+5. Projects will auto-detect and download updates
 
 ## 🤝 Contributing
 
