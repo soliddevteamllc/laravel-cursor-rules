@@ -43,9 +43,16 @@ Simply copy and paste this prompt to Cursor AI:
 >    php artisan cursor:rules-update
 >    ```
 > 
-> 4. Verify the installation by listing the `.cursor/rules/` directory.
+> 4. Add a step to the existing GitHub Actions deploy workflow to check Cursor rules are up to date. Add this step before deployment:
+>    ```yaml
+>    - name: Check Cursor Rules are up to date
+>      run: php artisan cursor:rules-update --check
+>    ```
+>    This will fail the pipeline if rules are outdated, forcing developers to update locally first.
 > 
-> 5. Show me a summary of what was installed.
+> 5. Verify the installation by listing the `.cursor/rules/` directory.
+> 
+> 6. Show me a summary of what was installed.
 
 **Or use the pre-made prompt:**
 See [CURSOR_INSTALL_PROMPT.md](CURSOR_INSTALL_PROMPT.md)

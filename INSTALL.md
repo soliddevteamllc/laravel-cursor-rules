@@ -78,6 +78,15 @@ This command:
 - Exits with code 1 if outdated
 - Perfect for CI/CD pipelines
 
+**Recommended**: Add this check to your GitHub Actions deploy workflow:
+
+```yaml
+- name: Check Cursor Rules are up to date
+  run: php artisan cursor:rules-update --check
+```
+
+This ensures all developers have the latest rules before deployment.
+
 ## Troubleshooting
 
 ### Command not found
