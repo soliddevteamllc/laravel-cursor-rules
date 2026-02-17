@@ -1,0 +1,78 @@
+---
+description: Use English for all code elements (variables, functions, classes, etc)
+alwaysApply: true
+---
+
+# English Naming Conventions
+
+All code elements must be written in English, including:
+- Variables and constants
+- Function and method names
+- Class names
+- Database table and column names
+- Comments and documentation
+- File names
+
+## Examples
+
+```php
+// ❌ BAD - Portuguese names
+$nomeUsuario = 'João';
+$dataAtual = now();
+function buscarColmeias() {}
+class GerenciadorAbelhas {}
+
+// ✅ GOOD - English names
+$userName = 'João';
+$currentDate = now();
+function fetchHives() {}
+class BeeManager {}
+```
+
+```php
+// ❌ BAD - Mixed Portuguese/English
+public function salvarDados($informacoes) {
+    $resultado = $this->processar($informacoes);
+    return $resultado;
+}
+
+// ✅ GOOD - Consistent English
+public function saveData($information) {
+    $result = $this->process($information);
+    return $result;
+}
+```
+
+## Database Naming
+
+```php
+// ❌ BAD
+Schema::create('usuarios', function (Blueprint $table) {
+    $table->string('nome');
+    $table->string('sobrenome');
+});
+
+// ✅ GOOD
+Schema::create('users', function (Blueprint $table) {
+    $table->string('first_name');
+    $table->string('last_name');
+});
+```
+
+## Livewire Components
+
+```php
+// ❌ BAD
+class GerenciarColmeias extends Component {
+    public $listaColmeias;
+    
+    public function buscar() {}
+}
+
+// ✅ GOOD
+class ManageHives extends Component {
+    public $hiveList;
+    
+    public function fetch() {}
+}
+```

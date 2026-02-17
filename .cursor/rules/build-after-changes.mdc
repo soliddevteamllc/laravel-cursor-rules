@@ -1,0 +1,49 @@
+---
+description: Run npm run build after CSS or HTML changes
+alwaysApply: true
+---
+
+# Build Assets After Changes
+
+Always run `npm run build` after making changes to CSS or HTML/Blade files that affect styling.
+
+## When to Build
+
+Run `npm run build` after changes to:
+
+- Tailwind CSS classes in Blade templates
+- `resources/css/app.css` file
+- Any file that uses Tailwind utility classes
+- `tailwind.config.js` configuration
+- Adding or removing Tailwind plugins
+
+## Build Commands
+
+```bash
+# Production build (minified, optimized)
+npm run build
+
+# Development build with watch mode
+npm run dev
+```
+
+## Workflow
+
+```bash
+# 1. Make changes to Blade/CSS files
+# 2. Build assets
+npm run build
+
+# 3. Verify changes in browser
+# 4. Commit if everything looks good
+git add .
+git commit -m "Update styles"
+```
+
+## Important Notes
+
+- The build process compiles Tailwind CSS and processes Vite assets
+- Built assets are output to `public/build/`
+- Development mode (`npm run dev`) watches for changes automatically
+- Always build before committing frontend changes
+- Production builds are optimized and purge unused CSS

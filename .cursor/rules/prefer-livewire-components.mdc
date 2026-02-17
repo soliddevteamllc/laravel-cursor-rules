@@ -1,0 +1,101 @@
+---
+description: Prefer Livewire components over controllers
+globs: app/Http/Controllers/**/*.php
+alwaysApply: false
+---
+
+# Prefer Livewire Components Over Controllers
+
+This is a **Livewire 3 project**. Avoid creating new controllers unless absolutely necessary.
+
+## Core Principle
+
+**Always prefer creating Livewire components** instead of controllers for handling user interactions, forms, and dynamic UI.
+
+---
+
+## When to Use Livewire Components
+
+✅ **Use Livewire for:**
+- Forms and user input
+- Dynamic UI updates
+- CRUD operations
+- Interactive interfaces
+- Real-time features
+- Modal dialogs
+- Data tables with filtering/sorting
+
+---
+
+## When Controllers Are Acceptable
+
+⚠️ **Only use controllers for:**
+- API endpoints
+- File downloads/exports
+- OAuth callbacks
+- Webhook handlers
+- Third-party integrations that require specific routes
+
+---
+
+## Examples
+
+### ❌ BAD: Creating a controller
+
+```php
+// app/Http/Controllers/ProductController.php
+class ProductController extends Controller
+{
+    public function create()
+    {
+        return view('products.create');
+    }
+    
+    public function store(Request $request)
+    {
+        // validation and logic
+    }
+}
+```
+
+### ✅ GOOD: Creating a Livewire component
+
+```php
+// app/Livewire/Products/CreateProduct.php
+use Livewire\Component;
+
+class CreateProduct extends Component
+{
+    public $name;
+    public $price;
+    
+    public function save()
+    {
+        $validated = $this->validate([
+            'name' => 'required|min:3',
+            'price' => 'required|numeric',
+        ]);
+        
+        Product::create($validated);
+        
+        $this->dispatch('product-created');
+        $this->redirect(route('products.index'));
+    }
+    
+    public function render()
+    {
+        return view('livewire.products.create-product');
+    }
+}
+```
+
+---
+
+## Quick Reference
+
+**Before creating a controller, ask:**
+1. Can this be a Livewire component? (Usually yes)
+2. Does this need to be a separate API endpoint? (Rarely)
+3. Is this for a third-party integration? (Acceptable use case)
+
+**Remember:** Livewire components are more powerful and maintain better state management in this project.

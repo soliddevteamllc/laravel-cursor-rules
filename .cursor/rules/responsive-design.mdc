@@ -1,0 +1,68 @@
+---
+description: Always make designs responsive using Tailwind mobile-first approach
+alwaysApply: true
+---
+
+# Responsive Design Guidelines
+
+Always prefer Tailwind CSS and make designs responsive using mobile-first approach.
+
+## Mobile-First Approach
+
+```blade
+{{-- ✅ GOOD - Mobile first, then larger screens --}}
+<div class="p-4 md:p-6 lg:p-8">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold">
+        Responsive Title
+    </h1>
+</div>
+
+{{-- ✅ GOOD - Responsive grid --}}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div>Card 1</div>
+    <div>Card 2</div>
+    <div>Card 3</div>
+</div>
+```
+
+## Responsive Breakpoints
+
+Tailwind 4 breakpoints (same as v3):
+- `sm:` - 640px and up (small tablets)
+- `md:` - 768px and up (tablets)
+- `lg:` - 1024px and up (laptops)
+- `xl:` - 1280px and up (desktops)
+- `2xl:` - 1536px and up (large desktops)
+
+## Common Patterns
+
+```blade
+{{-- Responsive navigation --}}
+<nav class="flex flex-col md:flex-row gap-4 md:gap-6">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+</nav>
+
+{{-- Responsive container --}}
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    Content
+</div>
+
+{{-- Hide/show elements by screen size --}}
+<div class="hidden md:block">Desktop only</div>
+<div class="block md:hidden">Mobile only</div>
+
+{{-- Responsive text --}}
+<p class="text-sm sm:text-base lg:text-lg">
+    Responsive paragraph
+</p>
+```
+
+## Best Practices
+
+- Start with mobile layout (no prefix)
+- Add breakpoints for larger screens
+- Test on multiple screen sizes
+- Use responsive spacing, typography, and grids
+- Avoid fixed widths, prefer max-width with responsive values
+- Use `container` class for content width control

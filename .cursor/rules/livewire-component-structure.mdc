@@ -1,0 +1,194 @@
+---
+description: Livewire component structure - separate files for list, create, and edit
+alwaysApply: true
+---
+
+# Livewire Component Structure
+
+Always create separate Livewire components for list, create (new), and edit operations. Never combine these concerns into a single component.
+
+## Component Separation Pattern
+
+```
+✅ GOOD - Separate components
+app/Livewire/Product/ProductList.php
+app/Livewire/Product/ProductNew.php
+app/Livewire/Product/ProductEdit.php
+
+❌ BAD - Single component handling everything
+app/Livewire/ProductManagement.php
+```
+
+## Route Structure
+
+```php
+// routes/web.php
+Route::middleware(['auth'])->group(function () {
+    // List view
+    Route::get('/products', ProductList::class)->name('products.index');
+    
+    // Create new
+    Route::get('/products/new', ProductNew::class)->name('products.create');
+    
+    // Edit existing
+    Route::get('/products/edit/{id}', ProductEdit::class)->name('products.edit');
+});
+```
+
+## Component Examples
+
+### List Component
+
+```php
+// app/Livewire/Product/ProductList.php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Product;
+
+use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\Product;
+
+class ProductList extends Component
+{
+    use WithPagination;
+
+    public string $search = '';
+
+    public function render()
+    {
+        return view('livewire.product.product-list', [
+            'products' => Product::query()
+                ->when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))
+                ->paginate(10),
+        ]);
+    }
+}
+```
+
+### Create Component
+
+```php
+// app/Livewire/Product/ProductNew.php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Product;
+
+use Livewire\Component;
+use App\Models\Product;
+
+class ProductNew extends Component
+{
+    public string $name = '';
+    public string $description = '';
+    public float $price = 0;
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+        ];
+    }
+
+    public function save(): void
+    {
+        $validated = $this->validate();
+        
+        Product::create($validated);
+        
+        session()->flash('success', 'Product created successfully');
+        $this->redirect(route('products.index'));
+    }
+
+    public function render()
+    {
+        return view('livewire.product.product-new');
+    }
+}
+```
+
+### Edit Component
+
+```php
+// app/Livewire/Product/ProductEdit.php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Product;
+
+use Livewire\Component;
+use App\Models\Product;
+
+class ProductEdit extends Component
+{
+    public Product $product;
+    
+    public string $name = '';
+    public string $description = '';
+    public float $price = 0;
+
+    public function mount(int $id): void
+    {
+        $this->product = Product::findOrFail($id);
+        $this->name = $this->product->name;
+        $this->description = $this->product->description;
+        $this->price = $this->product->price;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+        ];
+    }
+
+    public function save(): void
+    {
+        $validated = $this->validate();
+        
+        $this->product->update($validated);
+        
+        session()->flash('success', 'Product updated successfully');
+        $this->redirect(route('products.index'));
+    }
+
+    public function render()
+    {
+        return view('livewire.product.product-edit');
+    }
+}
+```
+
+## View Structure
+
+```
+resources/views/livewire/product/
+├── product-list.blade.php
+├── product-new.blade.php
+└── product-edit.blade.php
+```
+
+## Benefits of Separation
+
+- **Single Responsibility** - Each component has one clear purpose
+- **Easier Testing** - Test create, read, update separately
+- **Better Maintainability** - Changes to edit don't affect create
+- **Clearer Routes** - URL structure matches component structure
+- **Simpler Logic** - No complex conditionals for different modes
+- **Better Performance** - Load only what's needed for each view
+
+## Naming Convention
+
+- List: `{Model}List.php` (e.g., ProductList, UserList)
+- Create: `{Model}New.php` (e.g., ProductNew, UserNew)
+- Edit: `{Model}Edit.php` (e.g., ProductEdit, UserEdit)
+- View (if needed): `{Model}Show.php` (e.g., ProductShow, UserShow)

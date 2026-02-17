@@ -1,0 +1,60 @@
+---
+description: Always use project's custom color palette from Tailwind configuration
+alwaysApply: true
+---
+
+# Color Palette Usage
+
+Always use the project's custom color palette defined in Tailwind configuration.
+
+## Where Colors Are Defined
+
+Colors can be defined in two places with Tailwind 4:
+
+1. **CSS-first in `resources/css/app.css`:**
+
+```css
+@theme {
+    --color-primary: #3b82f6;
+    --color-secondary: #10b981;
+    --color-accent: #f59e0b;
+    --color-danger: #ef4444;
+}
+```
+
+2. **JavaScript config in `tailwind.config.js`** (for complex configurations)
+
+## Using Custom Colors
+
+```blade
+{{-- ✅ GOOD - Use custom palette colors --}}
+<button class="bg-primary text-white hover:bg-primary-dark">
+    Submit
+</button>
+
+<div class="text-secondary border-secondary">
+    Success message
+</div>
+
+{{-- ❌ BAD - Avoid arbitrary color values --}}
+<button class="bg-[#3b82f6]">Submit</button>
+<div class="text-[rgb(16,185,129)]">Text</div>
+```
+
+## Consistency
+
+- Use the defined color palette across all components
+- Maintain consistent color usage for similar UI elements
+- Document color usage in design system if needed
+- Add new colors to the configuration file, not inline
+- Use semantic color names (primary, secondary, success, danger, warning, info)
+
+## Checking Current Palette
+
+```bash
+# View current Tailwind configuration
+cat resources/css/app.css | grep "@theme" -A 20
+cat tailwind.config.js
+```
+
+Always check the project's color configuration before adding new colors or components.

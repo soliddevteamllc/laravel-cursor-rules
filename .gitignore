@@ -1,0 +1,2 @@
+# Keep .cursor/rules/ tracked (these are the rules we're distributing)
+# Don't ignore anything - we want all rules to be committed

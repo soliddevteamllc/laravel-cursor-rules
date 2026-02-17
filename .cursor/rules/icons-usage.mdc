@@ -1,0 +1,42 @@
+---
+description: Icon usage guidelines - prefer FontAwesome or custom SVGs
+alwaysApply: true
+---
+
+# Icon Usage Guidelines
+
+Always use FontAwesome icons as the primary icon library. When an icon is not available in FontAwesome, create custom SVG icons.
+
+## FontAwesome First
+
+```blade
+{{-- ✅ GOOD - Use FontAwesome classes --}}
+<i class="fas fa-home"></i>
+<i class="far fa-user"></i>
+<i class="fab fa-github"></i>
+
+{{-- Use with Tailwind classes for styling --}}
+<i class="fas fa-check text-green-500 text-xl"></i>
+<i class="fas fa-times text-red-500 text-2xl"></i>
+```
+
+## Custom SVGs When Needed
+
+```blade
+{{-- ✅ GOOD - Custom SVG when FontAwesome doesn't have it --}}
+<svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+</svg>
+
+{{-- Store reusable custom SVGs as Blade components --}}
+{{-- resources/views/components/icons/custom-bee.blade.php --}}
+<x-icons.custom-bee class="w-8 h-8 text-yellow-500" />
+```
+
+## Best Practices
+
+- Use semantic icon names that match their purpose
+- Apply consistent sizing using Tailwind classes (`text-xl`, `text-2xl`, `w-6 h-6`)
+- Use `currentColor` for SVG fill to allow easy color customization
+- Create Blade components for frequently used custom SVGs
+- Keep SVGs optimized and minimal
