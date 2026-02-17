@@ -12,7 +12,6 @@ laravel-cursor-rules/
 ├── QUICK_START.md                         # Quick reference
 ├── laravel-cursor-rules-manifest.json     # Version + file list
 ├── CursorRulesUpdate.php                  # Laravel command
-├── pre-commit                             # Git hook
 └── .cursor/
     └── rules/
         ├── build-after-changes.mdc                    # Build process rules
@@ -44,17 +43,9 @@ Simply copy and paste this prompt to Cursor AI:
 >    php artisan cursor:rules-update
 >    ```
 > 
-> 4. Download the pre-commit hook to `.git/hooks/pre-commit` from:
->    https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
+> 4. Verify the installation by listing the `.cursor/rules/` directory.
 > 
-> 5. Make the hook executable (Linux/Mac):
->    ```bash
->    chmod +x .git/hooks/pre-commit
->    ```
-> 
-> 6. Verify the installation by listing the `.cursor/rules/` directory.
-> 
-> 7. Show me a summary of what was installed.
+> 5. Show me a summary of what was installed.
 
 **Or use the pre-made prompt:**
 See [CURSOR_INSTALL_PROMPT.md](CURSOR_INSTALL_PROMPT.md)
@@ -72,12 +63,6 @@ See [CURSOR_INSTALL_PROMPT.md](CURSOR_INSTALL_PROMPT.md)
    php artisan cursor:rules-update
    ```
 
-3. (Optional) Install pre-commit hook:
-   ```bash
-   curl -o .git/hooks/pre-commit \
-     https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
-   chmod +x .git/hooks/pre-commit
-   ```
 
 ## 🔄 Auto-Update Feature
 
@@ -95,12 +80,13 @@ The Laravel command (`cursor:rules-update`) automatically:
 php artisan cursor:rules-update
 ```
 
-**Automatic Updates (via pre-commit hook):**
-- Runs before every git commit
-- Checks for rule updates
-- Downloads new rules if available
-- Blocks commit if rules were updated (requires manual review)
-- You review and stage changes yourself
+**Check Version (for CI/CD):**
+```bash
+php artisan cursor:rules-update --check
+```
+- Exits with code 0 if up to date
+- Exits with code 1 if outdated
+- Perfect for CI/CD pipelines
 
 **Force Update:**
 ```bash

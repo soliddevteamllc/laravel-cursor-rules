@@ -17,17 +17,9 @@ Please install Laravel Cursor Rules in this project by following these steps:
    php artisan cursor:rules-update
    ```
 
-4. Download the pre-commit hook to `.git/hooks/pre-commit` from:
-   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
+4. Verify the installation by listing the `.cursor/rules/` directory.
 
-5. Make the hook executable (Linux/Mac):
-   ```bash
-   chmod +x .git/hooks/pre-commit
-   ```
-
-6. Verify the installation by listing the `.cursor/rules/` directory.
-
-7. Show me a summary of what was installed.
+5. Show me a summary of what was installed.
 
 ---
 

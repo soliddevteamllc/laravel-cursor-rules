@@ -29,21 +29,7 @@ This will:
 - Download the manifest file
 - Set up version tracking
 
-### 3. Install Pre-commit Hook (Optional)
-
-Download the pre-commit hook to `.git/hooks/`:
-
-```
-Source: https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
-Destination: .git/hooks/pre-commit
-```
-
-**Important:** Make the hook executable (Linux/Mac only):
-```bash
-chmod +x .git/hooks/pre-commit
-```
-
-### 4. Verify Installation
+### 3. Verify Installation
 
 Check that rules were installed:
 
@@ -63,13 +49,10 @@ your-laravel-project/
 │   └── Console/
 │       └── Commands/
 │           └── CursorRulesUpdate.php          # Update command
-├── .cursor/
-│   └── rules/
-│       ├── *.mdc                               # Rule files (varies by version)
-│       └── laravel-cursor-rules-manifest.json # Version & file list
-└── .git/
-    └── hooks/
-        └── pre-commit                          # (Optional)
+└── .cursor/
+    └── rules/
+        ├── *.mdc                               # Rule files (varies by version)
+        └── laravel-cursor-rules-manifest.json # Version & file list
 ```
 
 ## Usage After Installation
@@ -84,10 +67,16 @@ php artisan cursor:rules-update
 php artisan cursor:rules-update --force
 ```
 
-### Automatic Updates (if pre-commit hook installed)
-- Hook runs before each commit
-- Downloads updates if available
-- Blocks commit if rules changed (requires manual review)
+### Check Version (CI/CD)
+```bash
+php artisan cursor:rules-update --check
+```
+
+This command:
+- Checks if rules are up to date
+- Exits with code 0 if up to date
+- Exits with code 1 if outdated
+- Perfect for CI/CD pipelines
 
 ## Troubleshooting
 
@@ -103,12 +92,6 @@ curl -o app/Console/Commands/CursorRulesUpdate.php \
   https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/CursorRulesUpdate.php
 ```
 
-### Re-download pre-commit hook
-```bash
-curl -o .git/hooks/pre-commit \
-  https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/pre-commit
-chmod +x .git/hooks/pre-commit
-```
 
 ## Repository
 

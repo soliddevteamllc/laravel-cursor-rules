@@ -15,7 +15,9 @@ class CursorRulesUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'cursor:rules-update {--force : Force update even if version is the same}';
+    protected $signature = 'cursor:rules-update 
+                            {--force : Force update even if version is the same}
+                            {--check : Check if rules are up to date without updating}';
 
     /**
      * The console command description.
@@ -53,7 +55,27 @@ class CursorRulesUpdate extends Command
             }
 
             // Compare versions
-            if (!$this->option('force') && $localVersion === $remoteVersion) {
+            $isUpToDate = $localVersion === $remoteVersion;
+
+            // If --check flag, only verify version and exit
+            if ($this->option('check')) {
+                if ($isUpToDate) {
+                    $this->info("✅ Rules are up to date: {$localVersion}");
+                    return self::SUCCESS;
+                } else {
+                    if ($localVersion) {
+                        $this->error("❌ Rules are outdated: {$localVersion} → {$remoteVersion}");
+                    } else {
+                        $this->error("❌ Rules not installed. Current version: {$remoteVersion}");
+                    }
+                    $this->newLine();
+                    $this->warn("Run the following command to update:");
+                    $this->line("  php artisan cursor:rules-update");
+                    return self::FAILURE;
+                }
+            }
+
+            if (!$this->option('force') && $isUpToDate) {
                 $this->info("✅ Rules are already up to date: {$localVersion}");
                 return self::SUCCESS;
             }
