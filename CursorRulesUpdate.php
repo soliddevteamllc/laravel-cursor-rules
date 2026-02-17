@@ -26,7 +26,6 @@ class CursorRulesUpdate extends Command
 
     private const BASE_URL = 'https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main';
     private const RULES_DIR = '.cursor/rules';
-    private const VERSION_FILE = 'laravel-cursor-rules-version.md';
     private const MANIFEST_FILE = 'laravel-cursor-rules-manifest.json';
 
     /**
@@ -77,9 +76,6 @@ class CursorRulesUpdate extends Command
             // Download and save manifest locally
             $this->saveLocalManifest($manifest);
 
-            // Download version file
-            $this->downloadVersionFile($remoteVersion);
-
             $this->info("✅ Rules updated successfully to version: {$remoteVersion}");
 
             return self::SUCCESS;
@@ -110,13 +106,15 @@ class CursorRulesUpdate extends Command
      */
     private function getLocalVersion(): ?string
     {
-        $versionPath = base_path(self::RULES_DIR . '/' . self::VERSION_FILE);
+        $manifestPath = base_path(self::RULES_DIR . '/' . self::MANIFEST_FILE);
 
-        if (!File::exists($versionPath)) {
+        if (!File::exists($manifestPath)) {
             return null;
         }
 
-        return trim(File::get($versionPath));
+        $manifest = json_decode(File::get($manifestPath), true);
+
+        return $manifest['version'] ?? null;
     }
 
     /**
@@ -164,14 +162,5 @@ class CursorRulesUpdate extends Command
     {
         $destination = base_path(self::RULES_DIR . '/' . self::MANIFEST_FILE);
         File::put($destination, json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-    }
-
-    /**
-     * Download the version file
-     */
-    private function downloadVersionFile(string $version): void
-    {
-        $destination = base_path(self::RULES_DIR . '/' . self::VERSION_FILE);
-        File::put($destination, $version);
     }
 }

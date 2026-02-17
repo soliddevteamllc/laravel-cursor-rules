@@ -19,7 +19,7 @@ irm https://raw.githubusercontent.com/soliddevteamllc/laravel-cursor-rules/main/
 1. **Laravel Command** - `app/Console/Commands/CursorRulesUpdate.php`
 2. **Cursor Rules** - `.cursor/rules/*.mdc` (8 rule files)
 3. **Pre-commit Hook** - `.git/hooks/pre-commit` (auto-updates)
-4. **Version Files** - `.cursor/rules/laravel-cursor-rules-version.md` and manifest
+4. **Manifest File** - `.cursor/rules/laravel-cursor-rules-manifest.json` (version tracking)
 
 ## Usage
 
@@ -54,8 +54,7 @@ your-laravel-project/
 │       ├── livewire-component-structure.mdc
 │       ├── prefer-livewire-components.mdc
 │       ├── responsive-design.mdc
-│       ├── laravel-cursor-rules-version.md    # Version tracking
-│       └── laravel-cursor-rules-manifest.json # File manifest
+│       └── laravel-cursor-rules-manifest.json # Version tracking & file list
 └── .git/
     └── hooks/
         └── pre-commit                          # Auto-update hook

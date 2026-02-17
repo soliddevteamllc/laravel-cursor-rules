@@ -6,10 +6,13 @@ A collection of Cursor AI rules for Laravel + Livewire projects that automatical
 
 ```
 laravel-cursor-rules/
-├── laravel-cursor-rules-version.md    # Version tracking
+├── laravel-cursor-rules-manifest.json         # Version and file list
+├── CursorRulesUpdate.php                      # Laravel command
+├── install.sh                                 # Linux/Mac installer
+├── install.ps1                                # Windows installer
+├── pre-commit                                 # Git hook
 └── .cursor/
     └── rules/
-        ├── laravel-cursor-rules-install.mdc           # Auto-installer
         ├── build-after-changes.mdc                    # Build process rules
         ├── color-palette-usage.mdc                    # Color standards
         ├── english-naming-conventions.mdc             # Naming standards
@@ -159,9 +162,8 @@ php artisan cursor:rules-update
 
 1. Make changes to rule files in `.cursor/rules/`
 2. Update version in `laravel-cursor-rules-manifest.json`
-3. Update version in `laravel-cursor-rules-version.md`
-4. Commit and push changes
-5. Projects will auto-detect and download updates
+3. Commit and push changes
+4. Projects will auto-detect and download updates
 
 ## 🤝 Contributing
 
