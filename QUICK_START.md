@@ -48,8 +48,8 @@ chmod +x .git/hooks/pre-commit
 ## What Gets Installed
 
 1. **Laravel Command** - `app/Console/Commands/CursorRulesUpdate.php`
-2. **Cursor Rules** - `.cursor/rules/*.mdc` (8 rule files)
-3. **Pre-commit Hook** - `.git/hooks/pre-commit` (auto-updates)
+2. **Cursor Rules** - `.cursor/rules/*.mdc` (multiple rule files)
+3. **Pre-commit Hook** - `.git/hooks/pre-commit` (optional)
 4. **Manifest File** - `.cursor/rules/laravel-cursor-rules-manifest.json` (version tracking)
 
 ## Usage
@@ -77,18 +77,11 @@ your-laravel-project/
 │           └── CursorRulesUpdate.php          # Update command
 ├── .cursor/
 │   └── rules/
-│       ├── build-after-changes.mdc
-│       ├── color-palette-usage.mdc
-│       ├── english-naming-conventions.mdc
-│       ├── icons-usage.mdc
-│       ├── laravel-livewire-best-practices.mdc
-│       ├── livewire-component-structure.mdc
-│       ├── prefer-livewire-components.mdc
-│       ├── responsive-design.mdc
+│       ├── *.mdc                               # Rule files (varies by version)
 │       └── laravel-cursor-rules-manifest.json # Version tracking & file list
 └── .git/
     └── hooks/
-        └── pre-commit                          # Auto-update hook
+        └── pre-commit                          # (Optional)
 ```
 
 ## How It Works

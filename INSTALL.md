@@ -52,7 +52,7 @@ ls -la .cursor/rules/
 ```
 
 You should see:
-- 8 rule files (*.mdc)
+- Multiple rule files (*.mdc)
 - laravel-cursor-rules-manifest.json
 
 ## What Gets Installed
@@ -65,15 +65,8 @@ your-laravel-project/
 │           └── CursorRulesUpdate.php          # Update command
 ├── .cursor/
 │   └── rules/
-│       ├── build-after-changes.mdc
-│       ├── color-palette-usage.mdc
-│       ├── english-naming-conventions.mdc
-│       ├── icons-usage.mdc
-│       ├── laravel-livewire-best-practices.mdc
-│       ├── livewire-component-structure.mdc
-│       ├── prefer-livewire-components.mdc
-│       ├── responsive-design.mdc
-│       └── laravel-cursor-rules-manifest.json
+│       ├── *.mdc                               # Rule files (varies by version)
+│       └── laravel-cursor-rules-manifest.json # Version & file list
 └── .git/
     └── hooks/
         └── pre-commit                          # (Optional)
